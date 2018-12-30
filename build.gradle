@@ -1,0 +1,83 @@
+buildscript {
+   repositories {
+      mavenLocal()
+      mavenCentral()
+   }
+}
+
+plugins {
+   id "com.github.spotbugs" version "1.6.8"
+   id "com.jfrog.artifactory" version "4.8.1"
+   id "idea"
+}
+
+ext {
+   assertJVersion = "3.11.1"
+   checkstyleVersion = "8.15"
+   jacocoVersion = "0.8.2"
+   junitVersion = "5.3.2"
+   pmdVersion = "6.10.0"
+}
+
+allprojects {
+
+   repositories {
+      mavenLocal()
+      mavenCentral()
+   }
+
+   apply from: "$rootDir/gradle/idea.gradle"
+}
+
+subprojects {
+
+   group "romanizer"
+
+   apply plugin: "java-library"
+   apply plugin: "checkstyle"
+   apply plugin: "com.github.spotbugs"
+   apply plugin: "jacoco"
+   apply plugin: "pmd"
+
+   sourceCompatibility = JavaVersion.VERSION_1_8
+   targetCompatibility = JavaVersion.VERSION_1_8
+
+   checkstyle {
+      toolVersion = checkstyleVersion
+   }
+
+   jacoco {
+      toolVersion = jacocoVersion
+   }
+
+   pmd {
+      toolVersion = pmdVersion
+      ruleSetFiles = files("$rootDir/config/pmd/pmd.xml")
+      ruleSets = []
+   }
+
+   spotbugs {
+      effort = "max"
+      excludeFilter = file("$rootDir/config/spotbugs/excludeFilter.xml")
+   }
+
+   dependencies {
+      testImplementation "org.assertj:assertj-core:$assertJVersion"
+      testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+      testImplementation "org.junit.jupiter:junit-jupiter-params:$junitVersion"
+      testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+   }
+
+   test {
+      useJUnitPlatform()
+      jacoco {
+         destinationFile = file("$buildDir/reports/jacoco/test.exec")
+      }
+      // Run tests parallel.
+      // Jacoco must append it's reports to a shared file.
+      // Otherwise coverage information is lost.
+      maxParallelForks = 2
+      testLogging.showStandardStreams = true
+   }
+   test.finalizedBy jacocoTestCoverageVerification
+}

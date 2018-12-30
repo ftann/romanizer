@@ -1,0 +1,12 @@
+idea {
+   module {
+      outputDir file("build/classes/main")
+      testOutputDir file("build/classes/test")
+   }
+}
+
+if (project.convention.findPlugin(JavaPluginConvention)) {
+   // Change output directory for main and test sources
+   sourceSets.main.java.outputDir = new File(buildDir, "classes/main")
+   sourceSets.test.java.outputDir = new File(buildDir, "classes/test")
+}

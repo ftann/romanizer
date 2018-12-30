@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE suppressions PUBLIC
+      "-//Puppy Crawl//DTD Suppressions 1.2//EN"
+      "http://checkstyle.sourceforge.net/dtds/suppressions_1_2.dtd">
+
+<suppressions>
+   <suppress checks="AvoidStaticImport" files=".*[\\/]src[\\/]test[\\/]"/>
+   <suppress checks="EmptyBlock" files=".*[\\/]src[\\/]test[\\/]"/>
+   <suppress checks="JavadocMethod" files=".*[\\/]src[\\/]test[\\/]"/>
+   <suppress checks="JavadocPackage" files=".*[\\/]src[\\/]test[\\/]"/>
+   <suppress checks="JavadocType" files=".*[\\/]src[\\/]test[\\/]"/>
+   <suppress checks="MethodCount" files=".*[\\/]src[\\/]test[\\/]"/>
+</suppressions>

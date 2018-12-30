@@ -1,0 +1,4 @@
+rootProject.name = "romanizer"
+
+include ":romanizer-app"
+include ":romanizer-java"
