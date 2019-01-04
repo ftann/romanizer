@@ -1,21 +1,26 @@
 package romanizer.lexer;
 
+import romanizer.token.Token;
+
+import java.util.Deque;
+
 /**
  * Standardized interface for lexical analysis.
  *
  * <p>A {@link Lexer} iterates over an input and performs tokenization.
  *
  * @param <C> Type of input
- * @param <N> Type of output
+ * @param <T> Type of output
  */
-public interface Lexer<C extends CharSequence, N extends Integer> {
+public interface Lexer<C extends CharSequence, T extends Token> {
 
    /**
-    * Performs lexical analysis and returns a tokenized output.
+    * Performs lexical analysis and returns a {@link Deque} of
+    * {@link Token}s.
     *
     * @param input Raw input
-    * @return Tokenized output as number
+    * @return Collection of tokens
     */
-   N lex(final C input);
+   Deque<T> lex(final C input);
 
 }

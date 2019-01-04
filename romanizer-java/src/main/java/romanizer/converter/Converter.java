@@ -1,7 +1,8 @@
 package romanizer.converter;
 
 import romanizer.lexer.Lexer;
-import romanizer.printer.Printer;
+import romanizer.parser.Parser;
+import romanizer.token.Token;
 
 /**
  * Converts values based on provided lexer and printer.
@@ -18,21 +19,22 @@ public interface Converter<I, O> {
     *
     * @param <I> Type of input
     * @param <O> Type of output
-    * @param <N> Type of intermediate result
+    * @param <T> Type of intermediate result
     * @param <L> Type of lexer
-    * @param <P> Type of printer
-    * @param lexer Lexer tokenizing input
-    * @param printer Printer converting to printable output
-    * @return Converter that converts values based on provided lexer and
+    * @param <P> Type of parser
+    * @param lexer {@link Lexer} Tokenizing input
+    * @param parser {@link Parser} Parsing tokens
+    * @return Converter that converts values based on provided lexer, parser and
     *       printer.
     */
    static <I extends CharSequence,
-         O extends CharSequence,
-         N extends Integer,
-         L extends Lexer<I, N>,
-         P extends Printer<N, O>
-         > Converter<I, O> of(final L lexer, final P printer) {
-      return input -> printer.print(lexer.lex(input));
+         O,
+         T extends Token,
+         L extends Lexer<I, T>,
+         P extends Parser<T, O>
+         > Converter<I, O> of(final L lexer, final P parser) {
+
+      return input -> parser.parse(lexer.lex(input));
    }
 
    /**

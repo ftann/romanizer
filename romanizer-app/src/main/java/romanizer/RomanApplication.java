@@ -12,6 +12,8 @@ import java.util.Scanner;
 @SuppressWarnings("PMD")
 public class RomanApplication {
 
+   private static final Converter<CharSequence, Integer> CONVERTER = RomanConverter.of();
+
    /**
     * RomanApplication.
     *
@@ -19,17 +21,20 @@ public class RomanApplication {
     */
    public static void main(final String... args) {
 
-      Converter<String, String> converter = RomanConverter.toDecimal();
+      boolean isDone = false;
 
-      while (true) {
+      try (Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8.name())) {
 
-         System.out.println("enter roman number:");
+         while (!isDone) {
+            System.out.println("enter roman number:");
 
-         Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8.name());
-         String input = scanner.nextLine();
-         String output = converter.convert(input);
+            String input = scanner.nextLine();
+            isDone = "".equalsIgnoreCase(input);
 
-         System.out.println(output);
+            Integer output = CONVERTER.convert(input);
+
+            System.out.println(output);
+         }
 
       }
    }

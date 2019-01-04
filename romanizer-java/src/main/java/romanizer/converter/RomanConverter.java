@@ -1,9 +1,7 @@
 package romanizer.converter;
 
-import static romanizer.printer.IntegerPrinters.ofDec;
-
-import romanizer.lexer.RomanLexer;
-import romanizer.printer.Printer;
+import romanizer.lexer.Lexers;
+import romanizer.parser.Parsers;
 
 /**
  * Provides converters from roman numbers.
@@ -11,22 +9,12 @@ import romanizer.printer.Printer;
 public interface RomanConverter {
 
    /**
-    * Returns {@link Converter} from roman to provided {@link Printer}.
-    *
-    * @param printer Printer
-    * @return Converter
-    */
-   static Converter<String, String> from(Printer<Integer, String> printer) {
-      return Converter.of(RomanLexer.of(), printer);
-   }
-
-   /**
-    * Returns {@link Converter} from roman to decimal number.
+    * Returns {@link Converter} from roman number to integer.
     *
     * @return Converter
     */
-   static Converter<String, String> toDecimal() {
-      return from(ofDec());
+   static Converter<CharSequence, Integer> of() {
+      return Converter.of(Lexers.roman(), Parsers.roman());
    }
 
 }
