@@ -1,4 +1,6 @@
 rootProject.name = "romanizer"
 
 include ":romanizer-app"
-include ":romanizer-java"
+include ":romanizer-api"
+include ":romanizer-arithmetic-impl"
+include ":romanizer-roman-impl"

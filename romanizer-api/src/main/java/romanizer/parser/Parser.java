@@ -4,6 +4,7 @@ import romanizer.token.Token;
 
 import java.util.Collection;
 import java.util.Deque;
+import java.util.function.Function;
 
 /**
  * Standardized interface for token parsers.
@@ -12,17 +13,8 @@ import java.util.Deque;
  * {@link Collection} of outputs.
  *
  * @param <T> Type of token input
- * @param <V> Type of output
+ * @param <O> Type of output
  */
 @FunctionalInterface
-public interface Parser<T extends Token, V> {
-
-   /**
-    * Parses the provided {@link Collection} of tokens.
-    *
-    * @param tokens {@link Deque} of {@link Token}s
-    * @return Collection of parsed values
-    */
-   V parse(final Deque<? extends T> tokens);
-
+public interface Parser<T extends Token, O> extends Function<Deque<T>, O> {
 }

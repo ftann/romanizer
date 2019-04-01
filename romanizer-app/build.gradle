@@ -1,3 +1,4 @@
 dependencies {
-   implementation project(':romanizer-java')
+   implementation project(':romanizer-arithmetic-impl')
+   implementation project(':romanizer-roman-impl')
 }

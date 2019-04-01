@@ -4,6 +4,8 @@ import romanizer.lexer.Lexer;
 import romanizer.parser.Parser;
 import romanizer.token.Token;
 
+import java.util.function.Function;
+
 /**
  * Converts values based on provided lexer and printer.
  *
@@ -11,38 +13,22 @@ import romanizer.token.Token;
  * @param <O> Type of output
  */
 @FunctionalInterface
-public interface Converter<I, O> {
+public interface Converter<I extends CharSequence, O> extends Function<I, O> {
 
    /**
     * Returns converter that converts values based on provided lexer and
     * printer.
     *
     * @param <I> Type of input
-    * @param <O> Type of output
     * @param <T> Type of intermediate result
-    * @param <L> Type of lexer
-    * @param <P> Type of parser
+    * @param <O> Type of output
     * @param lexer {@link Lexer} Tokenizing input
     * @param parser {@link Parser} Parsing tokens
     * @return Converter that converts values based on provided lexer, parser and
     *       printer.
     */
-   static <I extends CharSequence,
-         O,
-         T extends Token,
-         L extends Lexer<I, T>,
-         P extends Parser<T, O>
-         > Converter<I, O> of(final L lexer, final P parser) {
-
-      return input -> parser.parse(lexer.lex(input));
+   static <I extends CharSequence, T extends Token, O> Function<I, O> build(final Lexer<I, T> lexer, final Parser<T, O> parser) {
+      return lexer.andThen(parser);
    }
-
-   /**
-    * Converts provided input and returns printable output.
-    *
-    * @param input Values to be converted
-    * @return Printable output
-    */
-   O convert(final I input);
 
 }

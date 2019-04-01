@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 /**
  * {@link Lexer} for roman numbers.
  */
-interface RomanLexer {
+public interface RomanLexer extends Lexer<CharSequence, RomanLiteral> {
 
    /**
     * Performs lexical analysis of input string and returns {@link Deque}

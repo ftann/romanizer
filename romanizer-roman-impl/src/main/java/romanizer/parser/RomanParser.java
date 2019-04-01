@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 /**
  * {@link Parser} for roman literals.
  */
-interface RomanParser {
+public interface RomanParser extends Parser<RomanLiteral, Integer> {
 
    /**
     * Parses a {@link Collection} of {@link RomanLiteral}s into an integer.
@@ -17,7 +17,7 @@ interface RomanParser {
     * @param tokens Collection of tokens
     * @return Value
     */
-   static int parse(final Deque<? extends RomanLiteral> tokens) {
+   static int parse(final Deque<RomanLiteral> tokens) {
       return step(0, tokens);
    }
 
@@ -28,7 +28,7 @@ interface RomanParser {
     * @param tokens Stack of remaining tokens
     * @return Value
     */
-   private static int step(final int value, final Deque<? extends RomanLiteral> tokens) {
+   private static int step(final int value, final Deque<RomanLiteral> tokens) {
       if (tokens.isEmpty()) {
          return value;
       }
@@ -54,9 +54,21 @@ interface RomanParser {
     * @return {@code true} if tokens are part of subtractive notation
     */
    private static boolean isSubtractiveNotation(final RomanLiteral token, final RomanLiteral nextToken) {
-      return token == RomanLiteral.I && (nextToken == RomanLiteral.V || nextToken == RomanLiteral.X)
-            || token == RomanLiteral.X && (nextToken == RomanLiteral.L || nextToken == RomanLiteral.C)
-            || token == RomanLiteral.C && (nextToken == RomanLiteral.D || nextToken == RomanLiteral.M);
+      return isSubtractiveI(token, nextToken)
+            || isSubtractiveX(token, nextToken)
+            || isSubtractiveC(token, nextToken);
+   }
+
+   private static boolean isSubtractiveC(RomanLiteral token, RomanLiteral nextToken) {
+      return token == RomanLiteral.C && (nextToken == RomanLiteral.D || nextToken == RomanLiteral.M);
+   }
+
+   private static boolean isSubtractiveX(RomanLiteral token, RomanLiteral nextToken) {
+      return token == RomanLiteral.X && (nextToken == RomanLiteral.L || nextToken == RomanLiteral.C);
+   }
+
+   private static boolean isSubtractiveI(RomanLiteral first, RomanLiteral second) {
+      return first == RomanLiteral.I && (second == RomanLiteral.V || second == RomanLiteral.X);
    }
 
 }
