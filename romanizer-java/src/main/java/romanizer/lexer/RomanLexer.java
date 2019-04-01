@@ -31,7 +31,7 @@ interface RomanLexer {
     * @param input Raw token
     * @return Roman literal token
     */
-   static RomanLiteral tokenize(final int input) {
+   private static RomanLiteral tokenize(final int input) {
       switch (input) {
          case 'i':
          case 'I':

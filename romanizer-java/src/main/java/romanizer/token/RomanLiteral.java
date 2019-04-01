@@ -3,7 +3,7 @@ package romanizer.token;
 /**
  * Roman literals.
  */
-public enum RomanLiteral implements Token {
+public enum RomanLiteral implements Token<Integer> {
 
    /**
     * Neutral element.
@@ -32,12 +32,8 @@ public enum RomanLiteral implements Token {
       this.value = value;
    }
 
-   /**
-    * Returns token value.
-    *
-    * @return Value
-    */
-   public int getValue() {
+   @Override
+   public Integer getValue() {
       return value;
    }
 

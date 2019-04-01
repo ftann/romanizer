@@ -12,6 +12,7 @@ import java.util.Deque;
  * @param <C> Type of input
  * @param <T> Type of output
  */
+@FunctionalInterface
 public interface Lexer<C extends CharSequence, T extends Token> {
 
    /**

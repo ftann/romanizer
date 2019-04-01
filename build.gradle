@@ -6,41 +6,37 @@ buildscript {
 }
 
 plugins {
-   id "com.github.spotbugs" version "1.6.8"
-   id "com.jfrog.artifactory" version "4.8.1"
-   id "idea"
+   id 'com.github.spotbugs' version '1.6.11'
+   id 'idea'
 }
 
 ext {
-   assertJVersion = "3.11.1"
-   checkstyleVersion = "8.15"
-   jacocoVersion = "0.8.2"
-   junitVersion = "5.3.2"
-   pmdVersion = "6.10.0"
+   assertJVersion = '3.12.0'
+   checkstyleVersion = '8.17'
+   jacocoVersion = '0.8.3'
+   junitVersion = '5.4.1'
+   pmdVersion = '6.12.0'
 }
 
 allprojects {
-
    repositories {
       mavenLocal()
       mavenCentral()
    }
-
-   apply from: "$rootDir/gradle/idea.gradle"
 }
 
 subprojects {
 
-   group "romanizer"
+   group 'romanizer'
 
-   apply plugin: "java-library"
-   apply plugin: "checkstyle"
-   apply plugin: "com.github.spotbugs"
-   apply plugin: "jacoco"
-   apply plugin: "pmd"
+   apply plugin: 'java-library'
+   apply plugin: 'checkstyle'
+   apply plugin: 'com.github.spotbugs'
+   apply plugin: 'jacoco'
+   apply plugin: 'pmd'
 
-   sourceCompatibility = JavaVersion.VERSION_1_8
-   targetCompatibility = JavaVersion.VERSION_1_8
+   sourceCompatibility = JavaVersion.VERSION_11
+   targetCompatibility = JavaVersion.VERSION_11
 
    checkstyle {
       toolVersion = checkstyleVersion
@@ -57,27 +53,17 @@ subprojects {
    }
 
    spotbugs {
-      effort = "max"
+      effort = 'max'
       excludeFilter = file("$rootDir/config/spotbugs/excludeFilter.xml")
    }
 
    dependencies {
-      testImplementation "org.assertj:assertj-core:$assertJVersion"
-      testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
-      testImplementation "org.junit.jupiter:junit-jupiter-params:$junitVersion"
-      testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+       testImplementation group: 'org.assertj', name: 'assertj-core', version: assertJVersion
+       testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: junitVersion
    }
 
    test {
       useJUnitPlatform()
-      jacoco {
-         destinationFile = file("$buildDir/reports/jacoco/test.exec")
-      }
-      // Run tests parallel.
-      // Jacoco must append it's reports to a shared file.
-      // Otherwise coverage information is lost.
-      maxParallelForks = 2
-      testLogging.showStandardStreams = true
    }
    test.finalizedBy jacocoTestCoverageVerification
 }

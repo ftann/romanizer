@@ -32,17 +32,6 @@
       </properties>
    </rule>
 
-   <rule ref="category/java/design.xml/LoosePackageCoupling">
-      <properties>
-         <property name="packages" value="com.adcubum.validationlibrary"/>
-      </properties>
-   </rule>
-   <rule ref="category/java/design.xml/TooManyMethods">
-      <properties>
-         <property name="maxmethods" value="20"/>
-      </properties>
-   </rule>
-
    <rule ref="category/java/documentation.xml/CommentSize">
       <properties>
          <property name="maxLines" value="40"/>
